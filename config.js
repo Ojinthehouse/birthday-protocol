@@ -3,7 +3,7 @@ window.BIRTHDAY_CONFIG = {
   nickname: 'birthday girl',
   characterName: 'Phrolova',
   acceptedAnswers: ['phrolova', 'phoroloa', 'phrolova wuwa'],
-  characterImage: '', // e.g. './assets/phrolova.webp'; blacked out until guessed
+  characterImage: './assets/phrolova-mystery.webp', // uncovered one fragment per wrong guess
   singingAudio: '', // optional './assets/voice.mp3'
   purpleVideo: '', // optional clean Wuwa purple pull footage
   goldVideo: '', // optional gold footage, starting at a matching point
