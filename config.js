@@ -1,6 +1,6 @@
 // Personalise this file. All content here is public when hosted on GitHub Pages.
 window.BIRTHDAY_CONFIG = {
-  nickname: 'birthday girl',
+  nickname: 'Yuki',
   characterName: 'Phrolova',
   acceptedAnswers: ['phrolova', 'phoroloa', 'phrolova wuwa'],
   characterImage: './assets/phrolova-mystery.webp', // uncovered one fragment per wrong guess

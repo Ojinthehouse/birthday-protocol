@@ -70,3 +70,37 @@
 @media(max-width:850px){.idv-mode .split .lead{font-size:21px}.evidence-caption strong{font-size:47px}.book-copy .terminal{font-size:20px}.book-copy .lead{font-size:20px}}
 
 .sequence-tier{font:24px 'IDV Graphics',Georgia,serif;display:inline-block;margin-left:5px;vertical-align:middle}
+
+/* Phrolova cinematic: plays once before the recovered profile. */
+.transition-playing{overflow:hidden}
+.phrolova-transition{position:fixed;inset:0;z-index:1000;background:#070306;display:grid;place-items:center;opacity:1;transition:opacity .45s ease}
+.phrolova-transition video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .3s}
+.phrolova-transition.is-playing video{opacity:1}
+.phrolova-transition.is-leaving{opacity:0;pointer-events:none}
+.transition-loading{color:#e4c6c5;font:25px 'IDV Graphics',Georgia,serif}
+.is-playing .transition-loading{display:none}
+.transition-skip{position:absolute;right:24px;bottom:28px;color:#fff1e1;border:1px solid #fff4;background:#150b12aa;padding:13px 20px;border-radius:3px;z-index:2}
+.transition-credit{position:absolute;left:24px;bottom:30px;color:#f4dedc;font:12px Georgia,serif;text-decoration:none;background:#140a12aa;padding:8px;z-index:2}
+.birthday-book{position:relative;width:100%;aspect-ratio:1920/1110;background:url('./assets/yuki-birthday-book.webp') center/100% 100% no-repeat;isolation:isolate}
+.birthday-photo{position:absolute;left:15.4%;top:13.6%;width:29.7%;height:69%;transform:rotate(-1.5deg);overflow:hidden;background:#151313;box-shadow:1px 2px 10px #0007}
+.birthday-photo img{width:100%;height:100%;object-fit:contain;display:block}
+.birthday-trait{position:absolute;left:53.4%;top:23%;width:32.5%;padding:10px 12px;background:#c5c6b7d9;text-align:center;color:#3b3438;box-shadow:0 0 18px #c5c6b7}
+.birthday-trait h2{font-size:clamp(24px,3.15vw,43px);line-height:1.12;letter-spacing:1px;text-wrap:balance}
+.birthday-orientation{position:absolute;left:51.7%;top:38%;width:36.1%;height:45%;padding:16px 20px;background:linear-gradient(110deg,#879fa5f5,#a2b6b8f5);border-radius:15px 3px 25px 4px;color:#283539;box-shadow:1px 4px 10px #212e3333;overflow:auto;scrollbar-width:thin;scrollbar-color:#536a70 #91aaaf}
+.birthday-orientation h3{font-size:clamp(19px,2.2vw,30px);line-height:1.2;margin:0 0 10px;font-weight:400}
+.birthday-orientation p{font:clamp(14px,1.35vw,18px)/1.4 'IDV Graphics',Georgia,serif;margin:0 0 12px}
+.birthday-orientation strong{font-weight:400;color:#652e38}
+.birthday-actions{text-align:center;padding:22px 0}
+@media(max-width:1100px){
+ .birthday-book{aspect-ratio:auto;min-height:0;padding:40px 8% 46px;background-size:auto 100%;background-position:right center;display:flex;flex-direction:column;align-items:center;gap:24px}
+ .birthday-photo{position:relative;inset:auto;width:min(100%,330px);height:auto;aspect-ratio:3/4;border:6px solid #d5c9b1;transform:rotate(-1deg)}
+ .birthday-photo img{height:100%}
+ .birthday-trait{position:relative;inset:auto;width:100%;padding:22px 12px;background:#c8cbbb;border:1px solid #9b9e90;box-shadow:0 3px 12px #0002}
+ .birthday-trait:before{content:'External Trait';display:block;font-size:19px;margin-bottom:12px;font-style:italic}
+ .birthday-trait h2{font-size:31px}
+ .birthday-orientation{position:relative;inset:auto;width:100%;height:auto;padding:24px;overflow:visible}
+ .birthday-orientation h3{font-size:27px}.birthday-orientation p{font-size:20px;line-height:1.5}
+ .transition-credit{left:12px;bottom:12px;font-size:10px}.transition-skip{right:12px;bottom:50px;font-size:13px}
+}
+@media(orientation:portrait){.phrolova-transition video{object-fit:contain}}
+@media(prefers-reduced-motion:reduce){.phrolova-transition,.phrolova-transition video{transition:none}}
