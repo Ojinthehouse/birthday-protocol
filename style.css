@@ -104,3 +104,15 @@
 }
 @media(orientation:portrait){.phrolova-transition video{object-fit:contain}}
 @media(prefers-reduced-motion:reduce){.phrolova-transition,.phrolova-transition video{transition:none}}
+
+/* Supplied convene footage and reward backdrop. */
+.cinema.footage{min-height:0;aspect-ratio:16/9;background:#000;border-color:#f6d68b55}
+.cinema.footage video{object-fit:contain}
+.pull-loading{color:var(--gold);position:relative;pointer-events:none}
+.cinema.is-playing .pull-loading{display:none}
+.cinema.footage .secondary{background:#07110edb;border-color:#ffffff55}
+.reward{padding:38px;border:1px solid #f6d68b55;border-radius:12px;background:linear-gradient(90deg,#14140740,#17190bd9),url('./assets/pull-background.png') center/cover;gap:34px}
+.reward .lead{color:#e5e3cc}.reward .eyebrow{color:#f6d68b;line-height:1.8}
+.reward-art{border:0;border-radius:0;background:radial-gradient(ellipse,#f6d68b38,transparent 70%)}
+.five-star-reward .reward-art img{filter:drop-shadow(0 8px 24px #0009)}
+@media(max-width:700px){.reward{padding:25px 20px;gap:18px}.cinema.footage{aspect-ratio:16/10}.cinema.footage .secondary{bottom:10px;right:10px;padding:10px 14px;font-size:12px}}

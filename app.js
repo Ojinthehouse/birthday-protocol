@@ -58,10 +58,34 @@ function decorateArchive(){
  book.append(portrait,copy);scene.append(book);
 }
 function choice(eyebrow,title,description,yes,no,next,soft){scene.innerHTML=`<div class="panel center ${soft?'soft':''}">${intro(eyebrow,title,description)}<div class="choice-zone"><button class="primary" id="next">${yes}</button><button class="secondary dodge" id="dodge">${no}</button></div><p class="tiny" id="dodge-note">You’re definitely in control here.</p></div>`;nextTo(next);const b=document.querySelector('#dodge'),zone=b.parentElement;let count=0;function dodge(e){e.preventDefault();count++;const w=zone.clientWidth-b.offsetWidth,h=zone.clientHeight-b.offsetHeight; b.style.position='absolute';const oldX=parseFloat(b.style.left)||0;let x=Math.random()*Math.max(0,w);if(Math.abs(x-oldX)<70)x=oldX>w/2?0:w;b.style.left=x+'px';b.style.top=(55+Math.random()*Math.max(0,h-55))+'px';document.querySelector('#dodge-note').textContent=count>2?(soft?'Your complaint has been successfully avoided.':'That option appears to have commitment issues.'):'Huh. Slippery little button.';tone(250+count*20);}b.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')dodge(e);});b.addEventListener('pointerdown',dodge);b.addEventListener('click',dodge);}
-function cinematic(){const token=epoch;scene.innerHTML=`<div class="cinema" id="cinema"><div class="portal"></div><div class="caption"><p class="eyebrow" id="cinema-label">CONVENE IN PROGRESS</p><h2 id="cinema-text">A familiar glow…</h2><p class="tiny" id="cinema-sub">Surely a ten-pull deserves something good.</p></div>${button('Skip to rewards ↗','skip','secondary')}</div>`;const box=document.querySelector('#cinema');let video;function media(src){if(!src)return;video=document.createElement('video');video.src=src;video.playsInline=true;video.muted=!sound;box.prepend(video);video.play().catch(()=>video.remove());video.onerror=()=>video.remove();}media(C.purpleVideo);const finish=()=>{if(epoch!==token)return;rewardIndex=0;go(10);};document.querySelector('#skip').onclick=finish;
-later(()=>{video?.pause();document.querySelector('#cinema-label').textContent='ANOMALY DETECTED';document.querySelector('#cinema-text').textContent='Wait.';document.querySelector('#cinema-sub').textContent='That’s not how your birthday is going to go.';tone(200,.25);},3800);
-later(()=>{video?.remove();box.classList.add('rewind');document.querySelector('#cinema-label').textContent='◀◀ REWINDING FATE';document.querySelector('#cinema-text').textContent='Let’s try that again.';tone(350,.6);},6200);
-later(()=>{box.classList.remove('rewind');box.classList.add('gold');media(C.goldVideo);document.querySelector('#cinema-label').textContent='BIRTHDAY OVERRIDE ACCEPTED';document.querySelector('#cinema-text').textContent='There you are. ✦';document.querySelector('#cinema-sub').textContent='Some things should be guaranteed.';tone(880,.7);},8000);later(finish,11500);}
-function showReward(index,fromCollection=false){const r=C.rewards[index];scene.innerHTML=`<div class="reward"><div class="reward-art">${r.image?`<img src="${esc(r.image)}" alt="${esc(r.title)}">`:`<span aria-hidden="true">${r.icon}</span>`}</div><div><p class="eyebrow">${fromCollection?'YOUR COLLECTION':`REVEAL ${String(index+1).padStart(2,'0')} / 10`} · ${esc(r.subtitle)}</p><div class="stars" aria-label="${r.rarity} stars">${'✦'.repeat(r.rarity)}</div><h2>${esc(r.title)}</h2><p class="lead">${esc(r.description)}</p>${button(fromCollection?'Back to results ↗':index===9?'View all rewards ↗':'Next reveal ↗')}</div></div>`;document.querySelector('#next').onclick=()=>{if(fromCollection||index===9)go(11);else{rewardIndex=index+1;go(10);}};}
+// Advance on the actual end of each supplied clip, with a fallback for unavailable media.
+function playPullVideo(src,label,onFinish){
+ const token=epoch;
+ scene.innerHTML=`<div class="cinema footage"><video playsinline preload="auto" aria-label="${esc(label)}"></video><p class="pull-loading" role="status">Preparing your pull…</p><button class="secondary" id="skip">Skip animation ↗</button></div>`;
+ const video=scene.querySelector('video'),box=scene.querySelector('.cinema');
+ let finished=false,watchdog;
+ const finish=()=>{if(finished||epoch!==token)return;finished=true;clearTimeout(watchdog);timers.delete(watchdog);video.pause();onFinish();};
+ const arm=()=>{clearTimeout(watchdog);timers.delete(watchdog);watchdog=later(finish,20000);};
+ video.muted=!sound;
+ video.addEventListener('ended',finish,{once:true});
+ video.addEventListener('error',finish,{once:true});
+ video.addEventListener('playing',()=>{box.classList.add('is-playing');arm();});
+ video.addEventListener('timeupdate',arm);
+ scene.querySelector('#skip').onclick=finish;
+ scene.querySelector('#skip').focus({preventScroll:true});
+ arm();
+ if(!src){finish();return;}
+ video.src=src;
+ video.play().catch(()=>{if(epoch===token)finish();});
+}
+function cinematic(){
+ playPullVideo(C.firstPullVideo,'Your first birthday pull',()=>{rewardIndex=0;go(10);});
+}
+function revealReward(index){
+ rewardIndex=index;
+ clearScene();
+ playPullVideo(C.rewards[index].rarity===5?C.goldVideo:C.purpleVideo,C.rewards[index].rarity===5?'Five-star pull animation':'Four-star pull animation',()=>go(10));
+}
+function showReward(index,fromCollection=false){const r=C.rewards[index];scene.innerHTML=`<div class="reward ${r.rarity===5?'five-star-reward':''}"><div class="reward-art">${r.image?`<img src="${esc(r.image)}" alt="${esc(r.title)}">`:`<span aria-hidden="true">${r.icon}</span>`}</div><div><p class="eyebrow">${fromCollection?'YOUR COLLECTION':`REVEAL ${String(index+1).padStart(2,'0')} / 10`} · ${esc(r.subtitle)}</p><div class="stars" aria-label="${r.rarity} stars">${'✦'.repeat(r.rarity)}</div><h2>${esc(r.title)}</h2><p class="lead">${esc(r.description)}</p>${button(fromCollection?'Back to results ↗':index===9?'View all rewards ↗':'Next reveal ↗')}</div></div>`;document.querySelector('#next').onclick=()=>{if(fromCollection||index===9)go(11);else{revealReward(index+1);}};}
 function results(){scene.innerHTML=`${intro('Convene complete','Ten pulls. All yours.','A very suspicious amount of birthday luck. Tap a reward to look again.')}<div class="results">${C.rewards.map((r,i)=>`<button class="result-card ${r.rarity===5?'gold-card':''}" data-reward="${i}" aria-label="View ${esc(r.title)}">${r.image?`<img src="${esc(r.image)}" alt="">`:`<span>${r.icon}</span>`}<strong>${esc(r.title)}</strong><small>${'✦'.repeat(r.rarity)}</small></button>`).join('')}</div><div class="panel"><p class="eyebrow">CHAPTER COMPLETE</p><h3>Your story doesn’t end here.</h3><p class="tiny">More birthday mischief is on its way. This is where the next chapter will begin.</p>${button('Replay the ten-pull ↺','replay','secondary')}</div>`;document.querySelectorAll('[data-reward]').forEach(b=>b.onclick=()=>{showReward(Number(b.dataset.reward),true);scene.querySelector('h2').focus?.();});document.querySelector('#replay').onclick=()=>go(8);}
-document.querySelector('#sound').onclick=()=>{sound=!sound;document.querySelector('#sound').textContent=sound?'Sound on':'Sound off';document.querySelector('#sound').setAttribute('aria-label',sound?'Disable sound':'Enable sound');if(sound)tone(660);};document.querySelector('#restart').onclick=()=>{attempts=0;rewardIndex=0;go(0);};go(0);
+document.querySelector('#sound').onclick=()=>{sound=!sound;document.querySelector('#sound').textContent=sound?'Sound on':'Sound off';document.querySelector('#sound').setAttribute('aria-label',sound?'Disable sound':'Enable sound');scene.querySelectorAll('video').forEach(v=>v.muted=!sound);if(sound)tone(660);};document.querySelector('#restart').onclick=()=>{attempts=0;rewardIndex=0;go(0);};go(0);
