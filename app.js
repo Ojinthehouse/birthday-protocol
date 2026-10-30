@@ -33,7 +33,7 @@ function investigationTransition(){
  const originEpoch=epoch;
  document.querySelector('#next').disabled=true;
  transitionOverlay=document.createElement('div');transitionOverlay.className='phrolova-transition';transitionOverlay.setAttribute('role','dialog');transitionOverlay.setAttribute('aria-modal','true');transitionOverlay.setAttribute('aria-label','Phrolova cinematic transition');
- transitionOverlay.innerHTML=`<video playsinline muted preload="auto" aria-label="Phrolova animation from Tenor"><source src="./assets/phrolova-transition.mp4" type="video/mp4"></video><p class="transition-loading">One more anomaly…</p><button class="transition-skip">Skip transition ↗</button><a class="transition-credit" href="https://tenor.com/en-IN/view/phrolova-anime-wuwa-wuthering-waves-gif-16453555748876991683" target="_blank" rel="noopener noreferrer">Phrolova · TyoTyo / Tenor</a>`;
+ transitionOverlay.innerHTML=`<video playsinline muted preload="auto" aria-label="Phrolova animation from Tenor"><source src="./assets/phrolova-transition.mp4?v=2" type="video/mp4"></video><p class="transition-loading">One more anomaly…</p><button class="transition-skip">Skip transition ↗</button><a class="transition-credit" href="https://tenor.com/en-IN/view/phrolova-anime-wuwa-wuthering-waves-gif-16453555748876991683" target="_blank" rel="noopener noreferrer">Phrolova · TyoTyo / Tenor</a>`;
  document.body.append(transitionOverlay);document.body.classList.add('transition-playing');
  for(const el of ['main','header','footer'])document.querySelector(el).inert=true;
  const video=transitionOverlay.querySelector('video'),skip=transitionOverlay.querySelector('button');skip.focus();
