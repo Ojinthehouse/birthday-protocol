@@ -29,3 +29,5 @@ Use any static file server, e.g. `python -m http.server 8000` from this folder, 
 - Optional sound begins only after the visitor enables it. Reduced-motion preferences disable CSS animation.
 - A GitHub Pages site and its assets are public. Do not include private details.
 - This is an unofficial personal fan project, unaffiliated with Wuthering Waves or its publisher.
+
+Lingyang portrait: https://gachatracker.app/games/wuwa/characters/lingyang/ (game artwork copyright Kuro Games).
