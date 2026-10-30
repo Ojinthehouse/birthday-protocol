@@ -2,12 +2,12 @@
 A mobile-friendly birthday prank website for October 31. Buildless HTML/CSS/JavaScript, suitable for GitHub Pages.
 
 ## Current sequence
-Guess a character → gacha account scan → fantastic voice profile → dodging trust/prank buttons → water mission → honest wellbeing check → ten Radiant Tides → supplied first-pull animation → ten reward reveals with rarity animations → collection.
+Guess a character → gacha account scan → fantastic voice profile → dodging trust/prank buttons → water mission → honest wellbeing check → ten Radiant Tides → four-star animation → midpoint pause → rewind → five-star animation → first-pull clip → ten reward reveals → collection.
 
 ## Customise
 Edit `config.js` for the nickname, character answer, character picture, optional singing audio, optional Wuwa purple/gold footage, and all ten rewards. Put your files in `assets/` and use relative paths such as `./assets/phrolova.webp`. Keep exactly ten rewards. The first six rewards use emoji artwork, and the final four use Phrolova and weapon artwork.
 
-The first pull uses the supplied first-pull.mp4. Subsequent reveals play four-star.mp4 or five-star.mp4 according to rarity, then show the supplied gold background. Playback follows each clip's ended event; skip, unavailable-media fallback, sound toggle, and restart are supported. The final four rewards are Phrolova S0, S1, S2, and Lethean Elegy R1.
+The ten-pull starts four-star.mp4, pauses halfway with the birthday intervention message, rewinds to its beginning, then plays five-star.mp4 and first-pull.mp4. All ten reward reveals then use the supplied gold background without repeating any animations. Playback follows each clip's ended event; skip, unavailable-media fallback, sound toggle, and restart are supported. The final four rewards are Phrolova S0, S1, S2, and Lethean Elegy R1.
 
 Lethean Elegy icon sourced from https://gachatracker.app/games/wuwa/weapons/lethean-elegy/ (game artwork © Kuro Games).
 
