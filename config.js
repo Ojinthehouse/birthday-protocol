@@ -18,6 +18,7 @@ window.BIRTHDAY_CONFIG = {
     { title: 'Phrolova', subtitle: 'THE FIRST PHROLOVA · S0', icon: '🌙', rarity: 5, description: 'First, your very own Phrolova. You thought the birthday luck stopped here?', image: './assets/phrolova-portrait.webp' },
     { title: 'Phrolova · S1', subtitle: 'AND ANOTHER ONE', icon: '🌙', rarity: 5, description: 'Another Phrolova?! That makes S1. The system is starting to get nervous.', image: './assets/phrolova-portrait.webp' },
     { title: 'Phrolova · S2', subtitle: 'AND ANOTHER… FINALLY, S2', icon: '🌙', rarity: 5, description: 'One more Phrolova. Finally, S2! Okay, now the system has a very good reason to be scared.', image: './assets/phrolova-portrait.webp' },
-    { title: 'Lethean Elegy', subtitle: 'HER SIGNATURE WEAPON · R1', icon: '✦', rarity: 5, description: 'Of course… how can she nuke without the weapon? S2 Phrolova and her signature. Happy birthday, Yuki. Go cause a little havoc. ♡', image: './assets/lethean-elegy.webp' }
+    { title: 'Lethean Elegy', subtitle: 'HER SIGNATURE WEAPON · R1', icon: '✦', rarity: 5, description: 'Of course… how can she nuke without the weapon? S2 Phrolova and her signature. Happy birthday, Yuki. Go cause a little havoc. ♡', image: './assets/lethean-elegy.webp' },
+    { title: 'The Artist', subtitle: 'BONUS PULL · NO ERASER NEEDED', icon: '🖋️', rarity: 5, description: 'There is so much to say, and only ten pulls. Wait—I forgot to mention: she’s an artist too. She draws in pen, with no second chances, and still makes it look effortless. The perspectives she captures, the thoughts behind every line, the way she sees things… ten pulls were never going to be enough for Yuki. So here’s one more. ♡', image: '' }
   ]
 };
