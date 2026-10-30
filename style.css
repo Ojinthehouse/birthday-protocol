@@ -119,3 +119,24 @@
 
 .gift-override{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:center;padding:28px;background:#080512a6;text-shadow:0 2px 16px #000;pointer-events:none}.gift-override h2{font-size:clamp(22px,4vw,46px)}.gift-override .tiny{color:#eee}.rewinding video{filter:hue-rotate(20deg) saturate(.65)}.cinema.footage .secondary{z-index:3}
 
+
+/* Artist bonus reveal: the sketchbook overflows the entire viewport. */
+.art-overflow{overflow:hidden}
+.artist-overflow{position:fixed;inset:0;z-index:1100;isolation:isolate;background:#071817cc;overflow:hidden}
+.art-storm{position:absolute;inset:0;pointer-events:none}
+.storm-sheet{position:absolute;left:var(--x);top:var(--y);width:var(--w);height:var(--h);margin:0;padding:7px;background:#ece5d8;border:1px solid #fff8;box-shadow:0 10px 35px #0008;opacity:0;transform:translate(-50%,-50%) scale(.2) rotate(0deg);animation:art-land .65s cubic-bezier(.2,.8,.2,1) var(--delay) forwards;will-change:transform,opacity}
+.storm-sheet img{display:block;width:100%;height:100%;object-fit:contain;background:#e8e3d6}
+.art-overflow-prompt{position:absolute;z-index:2;left:50%;top:50%;transform:translate(-50%,-50%);width:min(90vw,530px);padding:30px;text-align:center;border:1px solid #f6d68b99;border-radius:12px;background:#071817f5;box-shadow:0 15px 100px #000b;animation:art-prompt .35s ease both}
+.art-overflow-prompt[hidden]{display:none}
+.art-overflow-prompt h2{font-size:clamp(27px,4vw,40px);line-height:1.15}
+.art-overflow-prompt p:not(.eyebrow){color:#d8e8dd;line-height:1.7;margin:20px 0}
+.art-overflow-prompt .eyebrow{font-size:10px;letter-spacing:2px;line-height:1.5}
+.art-skip{position:absolute;z-index:3;bottom:max(15px,env(safe-area-inset-bottom));right:15px;background:#071817ed;font-size:12px;padding:11px 15px}
+.artist-overflow.is-blowing .storm-sheet{opacity:1;animation:art-fly 1.05s ease-in var(--exit-delay) forwards}
+.is-blowing .art-overflow-prompt,.is-blowing .art-skip{visibility:hidden}
+.artist-overflow.is-blowing{background:transparent;transition:background 1.3s}
+@keyframes art-land{to{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(var(--turn))}}
+@keyframes art-prompt{from{opacity:0}to{opacity:1}}
+@keyframes art-fly{from{opacity:1;transform:translate(-50%,-50%) rotate(var(--turn))}to{opacity:0;transform:translate(150vw,var(--fly-y)) rotate(var(--fly-turn)) scale(.7)}}
+@media(max-width:700px){.storm-sheet{padding:4px}.art-overflow-prompt{padding:25px 18px}.art-skip{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.storm-sheet{opacity:1;transform:translate(-50%,-50%) rotate(var(--turn));will-change:auto}.artist-overflow.is-blowing .storm-sheet{opacity:0}}

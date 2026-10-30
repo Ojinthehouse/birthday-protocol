@@ -8,6 +8,31 @@ window.BIRTHDAY_CONFIG = {
   firstPullVideo: './assets/first-pull.mp4',
   purpleVideo: './assets/four-star.mp4',
   goldVideo: './assets/five-star.mp4',
+  artistArtwork: [
+  "./assets/artist/art-01.webp",
+  "./assets/artist/art-02.webp",
+  "./assets/artist/art-03.webp",
+  "./assets/artist/art-04.webp",
+  "./assets/artist/art-05.webp",
+  "./assets/artist/art-06.webp",
+  "./assets/artist/art-07.webp",
+  "./assets/artist/art-08.webp",
+  "./assets/artist/art-09.webp",
+  "./assets/artist/art-10.webp",
+  "./assets/artist/art-11.webp",
+  "./assets/artist/art-12.webp",
+  "./assets/artist/art-13.webp",
+  "./assets/artist/art-14.webp",
+  "./assets/artist/art-15.webp",
+  "./assets/artist/art-16.webp",
+  "./assets/artist/art-17.webp",
+  "./assets/artist/art-18.webp",
+  "./assets/artist/art-19.webp",
+  "./assets/artist/art-20.webp",
+  "./assets/artist/art-21.webp",
+  "./assets/artist/art-22.webp",
+  "./assets/artist/art-23.webp"
+],
   rewards: [
     { title: 'Lingyang', subtitle: 'YOUR FIRST FIVE-STAR', icon: '🦁', rarity: 5, description: 'The first face from your pull: Lingyang! He brought the lion dance. The rest of your birthday luck is still waiting to make an entrance.', image: './assets/lingyang.webp' },
     { title: 'Jellycat Queen', subtitle: '7 JELLYCATS · 2 DANS · ONE QUEEN', icon: '🧸', rarity: 4, description: 'The proud owner of seven Jellycats and two Dans. A very specific collection, a very full kingdom, and exactly one queen in charge: Yuki.', image: './assets/jellycat-queen.webp' },
@@ -19,6 +44,6 @@ window.BIRTHDAY_CONFIG = {
     { title: 'Phrolova · S1', subtitle: 'AND ANOTHER ONE', icon: '🌙', rarity: 5, description: 'Another Phrolova?! That makes S1. The system is starting to get nervous.', image: './assets/phrolova-portrait.webp' },
     { title: 'Phrolova · S2', subtitle: 'AND ANOTHER… FINALLY, S2', icon: '🌙', rarity: 5, description: 'One more Phrolova. Finally, S2! Okay, now the system has a very good reason to be scared.', image: './assets/phrolova-portrait.webp' },
     { title: 'Lethean Elegy', subtitle: 'HER SIGNATURE WEAPON · R1', icon: '✦', rarity: 5, description: 'Of course… how can she nuke without the weapon? S2 Phrolova and her signature. Happy birthday, Yuki. Go cause a little havoc. ♡', image: './assets/lethean-elegy.webp' },
-    { title: 'The Artist', subtitle: 'BONUS PULL · NO ERASER NEEDED', icon: '🖋️', rarity: 5, description: 'There is so much to say, and only ten pulls. Wait—I forgot to mention: she’s an artist too. She draws in pen, with no second chances, and still makes it look effortless. The perspectives she captures, the thoughts behind every line, the way she sees things… ten pulls were never going to be enough for Yuki. So here’s one more. ♡', image: '' }
+    { title: 'The Artist', subtitle: 'BONUS PULL · NO ERASER NEEDED', icon: '🖋️', rarity: 5, description: 'There is so much to say, and only ten pulls. Wait—I forgot to mention: she’s an artist too. She draws in pen, with no second chances, and still makes it look effortless. The perspectives she captures, the thoughts behind every line, the way she sees things… ten pulls were never going to be enough for Yuki. So here’s one more. ♡', image: './assets/artist/artist-icon.webp' }
   ]
 };

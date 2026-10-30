@@ -2,12 +2,12 @@
 const C = window.BIRTHDAY_CONFIG;
 const scene = document.querySelector('#scene');
 const chapters = ['IDENTIFICATION','ACCOUNT INVESTIGATION','TALENT ANALYSIS','TRUST CHECK','PRANK REVEAL','SIDE QUEST','CHECKING IN','BIRTHDAY WISHES','YOUR GIFT','CONVENE','REWARDS','TO BE CONTINUED'];
-let transitionOverlay=null;
+let transitionOverlay=null, artistOverlay=null;
 let stage=0, attempts=0, rewardIndex=0, sound=false, audioContext, epoch=0, audio;
 const timers = new Set();
 const esc = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function later(fn,ms){const id=setTimeout(()=>{timers.delete(id);fn();},ms);timers.add(id);return id;}
-function clearScene(){epoch++;if(transitionOverlay){transitionOverlay.querySelector('video')?.pause();transitionOverlay.remove();transitionOverlay=null;document.querySelector('main').inert=false;document.querySelector('header').inert=false;document.querySelector('footer').inert=false;document.body.classList.remove('transition-playing');}for(const id of timers)clearTimeout(id);timers.clear();if(audio){audio.pause();audio=null;}scene.querySelectorAll('video').forEach(v=>v.pause());}
+function clearScene(){epoch++;clearArtistOverlay();if(transitionOverlay){transitionOverlay.querySelector('video')?.pause();transitionOverlay.remove();transitionOverlay=null;document.querySelector('main').inert=false;document.querySelector('header').inert=false;document.querySelector('footer').inert=false;document.body.classList.remove('transition-playing');}for(const id of timers)clearTimeout(id);timers.clear();if(audio){audio.pause();audio=null;}scene.querySelectorAll('video').forEach(v=>v.pause());}
 function tone(freq=440,duration=.08){if(!sound)return;try{audioContext ||= new (window.AudioContext||window.webkitAudioContext)();audioContext.resume();const o=audioContext.createOscillator(),g=audioContext.createGain();o.connect(g);g.connect(audioContext.destination);o.frequency.value=freq;g.gain.setValueAtTime(.035,audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioContext.currentTime+duration);o.start();o.stop(audioContext.currentTime+duration);}catch{}}
 function button(label,id='next',cls='primary'){return `<button class="${cls}" id="${id}">${label}</button>`;}
 function nextTo(n){document.querySelector('#next')?.addEventListener('click',()=>go(n));}
@@ -109,6 +109,35 @@ function revealReward(index){
  rewardIndex=index;
  go(10);
 }
-function showReward(index,fromCollection=false){const r=C.rewards[index];scene.innerHTML=`<div class="reward ${r.rarity===5?'five-star-reward':''}"><div class="reward-art">${r.image?`<img src="${esc(r.image)}" alt="${esc(r.title)}">`:`<span aria-hidden="true">${r.icon}</span>`}</div><div><p class="eyebrow">${fromCollection?'YOUR COLLECTION':index>=10?'SURPRISE · BONUS REVEAL':`REVEAL ${String(index+1).padStart(2,'0')} / 10`} · ${esc(r.subtitle)}</p><div class="stars" aria-label="${r.rarity} stars">${'✦'.repeat(r.rarity)}</div><h2>${esc(r.title)}</h2><p class="lead">${esc(r.description)}</p>${button(fromCollection?'Back to results ↗':index===C.rewards.length-1?'View all rewards ↗':index===9?'Wait, one more thing… ↗':'Next reveal ↗')}</div></div>`;document.querySelector('#next').onclick=()=>{if(fromCollection||index===C.rewards.length-1)go(11);else{revealReward(index+1);}};}
+function showReward(index,fromCollection=false){const r=C.rewards[index];scene.innerHTML=`<div class="reward ${r.rarity===5?'five-star-reward':''}"><div class="reward-art">${r.image?`<img src="${esc(r.image)}" alt="${esc(r.title)}">`:`<span aria-hidden="true">${r.icon}</span>`}</div><div><p class="eyebrow">${fromCollection?'YOUR COLLECTION':index>=10?'SURPRISE · BONUS REVEAL':`REVEAL ${String(index+1).padStart(2,'0')} / 10`} · ${esc(r.subtitle)}</p><div class="stars" aria-label="${r.rarity} stars">${'✦'.repeat(r.rarity)}</div><h2>${esc(r.title)}</h2><p class="lead">${esc(r.description)}</p>${button(fromCollection?'Back to results ↗':index===C.rewards.length-1?'View all rewards ↗':index===9?'Wait, one more thing… ↗':'Next reveal ↗')}</div></div>`;document.querySelector('#next').onclick=()=>{if(fromCollection||index===C.rewards.length-1)go(11);else{revealReward(index+1);}};if(r.title==='The Artist')artistBurst();}
 function results(){scene.innerHTML=`${intro('Convene complete','Ten pulls. One extra surprise.','A very suspicious amount of birthday luck. Tap a reward to look again.')}<div class="results">${C.rewards.map((r,i)=>`<button class="result-card ${r.rarity===5?'gold-card':''}" data-reward="${i}" aria-label="View ${esc(r.title)}">${r.image?`<img src="${esc(r.image)}" alt="">`:`<span>${r.icon}</span>`}<strong>${esc(r.title)}</strong><small>${'✦'.repeat(r.rarity)}</small></button>`).join('')}</div><div class="panel"><p class="eyebrow">CHAPTER COMPLETE</p><h3>Your story doesn’t end here.</h3><p class="tiny">More birthday mischief is on its way. This is where the next chapter will begin.</p>${button('Replay the ten-pull ↺','replay','secondary')}</div>`;document.querySelectorAll('[data-reward]').forEach(b=>b.onclick=()=>{showReward(Number(b.dataset.reward),true);scene.querySelector('h2').focus?.();});document.querySelector('#replay').onclick=()=>go(8);}
+
+function clearArtistOverlay(){
+ if(!artistOverlay)return;
+ artistOverlay.remove();artistOverlay=null;
+ document.body.classList.remove('art-overflow');
+ for(const tag of ['main','header','footer'])document.querySelector(tag).inert=false;
+}
+function artistBurst(){
+ clearArtistOverlay();
+ const artworks=C.artistArtwork||[];if(!artworks.length)return;
+ const originEpoch=epoch,reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ const cols=window.innerWidth<700?3:6, rows=Math.ceil(artworks.length/cols);
+ artistOverlay=document.createElement('div');
+ artistOverlay.className='artist-overflow';artistOverlay.setAttribute('role','dialog');
+ artistOverlay.setAttribute('aria-modal','true');artistOverlay.setAttribute('aria-labelledby','art-overflow-title');
+ artistOverlay.innerHTML=`<div class="art-storm" aria-hidden="true">${Array.from({length:rows*cols},(_,i)=>artworks[i%artworks.length]).map((src,i)=>{
+ const x=((i%cols)+.5)*100/cols,y=(Math.floor(i/cols)+.5)*100/rows;
+ return `<figure class="storm-sheet" style="--x:${x}%;--y:${y}%;--w:${125/cols}vw;--h:${130/rows}dvh;--turn:${(i*17%23)-11}deg;--delay:${reduced?0:i*145}ms;--fly-y:${(i%2?1:-1)*(30+i*4)}vh;--fly-turn:${(i%2?1:-1)*(35+i*7)}deg;--exit-delay:${i*18}ms"><img src="${esc(src)}" alt="" decoding="async"></figure>`;
+ }).join('')}</div><div class="art-overflow-prompt" hidden><p class="eyebrow">ARCHIVE CAPACITY EXCEEDED</p><h2 id="art-overflow-title">Too much talent.<br>Not enough screen space.</h2><p>There’s too much art to fit on one page.<br>Blow it away to uncover the artist. 💨</p><button class="primary" id="blow-art">Blow away the art 💨</button></div><button class="art-skip secondary">Skip art animation ↗</button>`;
+ document.body.append(artistOverlay);document.body.classList.add('art-overflow');
+ for(const tag of ['main','header','footer'])document.querySelector(tag).inert=true;
+ const overlay=artistOverlay,prompt=overlay.querySelector('.art-overflow-prompt'),blow=overlay.querySelector('#blow-art'),skip=overlay.querySelector('.art-skip');
+ skip.focus();let leaving=false;
+ const finish=()=>{if(leaving||epoch!==originEpoch)return;leaving=true;overlay.classList.add('is-blowing');tone(330,.2);later(()=>{clearArtistOverlay();const heading=scene.querySelector('h2');if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}},reduced?0:1800);};
+ blow.onclick=finish;skip.onclick=finish;
+ overlay.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();finish();}if(e.key==='Tab'&&!prompt.hidden){e.preventDefault();(document.activeElement===blow?skip:blow).focus();}});
+ later(()=>{if(epoch!==originEpoch||leaving)return;prompt.hidden=false;blow.focus();},reduced?0:artworks.length*145+900);
+}
+
 document.querySelector('#sound').onclick=()=>{sound=!sound;document.querySelector('#sound').textContent=sound?'Sound on':'Sound off';document.querySelector('#sound').setAttribute('aria-label',sound?'Disable sound':'Enable sound');scene.querySelectorAll('video').forEach(v=>v.muted=!sound);if(sound)tone(660);};document.querySelector('#restart').onclick=()=>{attempts=0;rewardIndex=0;go(0);};go(0);
