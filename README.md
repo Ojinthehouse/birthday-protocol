@@ -31,3 +31,6 @@ Use any static file server, e.g. `python -m http.server 8000` from this folder, 
 - This is an unofficial personal fan project, unaffiliated with Wuthering Waves or its publisher.
 
 Lingyang portrait: https://gachatracker.app/games/wuwa/characters/lingyang/ (game artwork copyright Kuro Games).
+
+S1 animated artwork: https://tenor.com/en-IN/view/phrolova-wuthering-waves-drive-driving-cry-gif-11760760868172603458
+S2 animated artwork: https://tenor.com/en-IN/view/nono-phrolova-phrolova-nono-gif-11222211335723166748

@@ -52,7 +52,7 @@ function decorateArchive(){
  const variants=['','hunter','survivor','survivor-switch','hunter-switch','survivor','survivor-switch'];
  const book=document.createElement('div');book.className=`idv-book book-${variants[stage]}`;
  const portrait=document.createElement('aside');portrait.className='book-evidence';
- portrait.innerHTML=`<div class="evidence-photo" aria-label="Phrolova character portrait"></div><div class="evidence-caption">CASE No. 1031<br><strong>Phrolova <span class="sequence-tier">S2</span></strong><small>HANDLE WITH EXTREME CAUTION</small></div>`;
+ portrait.innerHTML=`<div class="evidence-photo" aria-label="Citrus.rain case portrait"></div><div class="evidence-caption">CASE No. 1031<br><strong>Citrus.rain</strong><small>HANDLE WITH EXTREME CAUTION</small></div>`;
  const copy=document.createElement('div');copy.className='book-copy';
  while(scene.firstChild)copy.append(scene.firstChild);
  book.append(portrait,copy);scene.append(book);

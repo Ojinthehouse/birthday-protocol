@@ -28,7 +28,7 @@
 .idv-book{position:relative;background:url('./assets/idv-survivor-book.webp') center/100% 100% no-repeat;min-height:690px;isolation:isolate}
 .book-hunter{background-image:url('./assets/idv-hunter-book.webp')}.book-survivor-switch{background-image:url('./assets/idv-survivor-switch.webp')}.book-hunter-switch{background-image:url('./assets/idv-hunter-switch.webp')}
 .book-evidence{position:absolute;left:16.7%;top:15.2%;width:29.5%;height:67%;display:flex;flex-direction:column;transform:rotate(-.6deg);overflow:hidden;background:#0b0a0b}
-.evidence-photo{flex:1;background:linear-gradient(0deg,#08070bb0,transparent 45%),url('./assets/phrolova-portrait.webp') center 25%/cover no-repeat;min-height:0}
+.evidence-photo{flex:1;background:linear-gradient(0deg,#08070bb0,transparent 45%),url('./assets/citrus-rain.webp') center 25%/cover no-repeat;min-height:0}
 .evidence-caption{text-align:center;padding:12px 6px 16px;color:#dacbb3;font:13px/1.6 'IDV Graphics',Georgia,serif;background:#0c0b0b}
 .evidence-caption strong{display:block;font-family:'IDV Handwriting',Georgia,serif;font-size:30px;color:#f0d3ac;font-weight:400}
 .evidence-caption small{font-size:8px;letter-spacing:2px}
@@ -140,3 +140,5 @@
 @keyframes art-fly{from{opacity:1;transform:translate(-50%,-50%) rotate(var(--turn))}to{opacity:0;transform:translate(150vw,var(--fly-y)) rotate(var(--fly-turn)) scale(.7)}}
 @media(max-width:700px){.storm-sheet{padding:4px}.art-overflow-prompt{padding:25px 18px}.art-skip{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.storm-sheet{opacity:1;transform:translate(-50%,-50%) rotate(var(--turn));will-change:auto}.artist-overflow.is-blowing .storm-sheet{opacity:0}}
+/* Keep the case name inside its portrait caption at all widths. */
+.evidence-caption strong{font-size:clamp(24px,3.4vw,42px);overflow-wrap:anywhere}
