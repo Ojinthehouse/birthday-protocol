@@ -151,7 +151,7 @@
 @keyframes envelope-wiggle{0%,55%,100%{transform:rotate(0)}60%,80%{transform:rotate(-6deg)}70%,90%{transform:rotate(6deg)}}
 .letter-controls{display:flex;justify-content:flex-end;margin-bottom:16px}
 .birthday-letter{max-width:870px;margin:auto;padding:clamp(110px,14vw,150px) clamp(25px,7vw,85px) 90px;background:#d6b087 url('./assets/final-letter.png') center/100% 100% no-repeat;color:#38251c;box-shadow:0 25px 70px #0007;min-height:950px}
-.birthday-letter .letter-title{font:42px/1.4 'IDV Handwriting',Georgia,serif;letter-spacing:0;margin-bottom:25px}
-.letter-copy{white-space:pre-wrap;overflow-wrap:break-word;font:clamp(24px,2.5vw,30px)/1.65 'IDV Handwriting',Georgia,serif}
+.birthday-letter .letter-title{font:italic 36px/1.4 Georgia,'Times New Roman',serif;letter-spacing:0;margin-bottom:25px}
+.letter-copy{white-space:pre-wrap;overflow-wrap:break-word;font:italic clamp(20px,2vw,25px)/1.7 Georgia,'Times New Roman',serif}
 .letter-end{text-align:center;font-size:38px;margin-top:35px}.letter-status{text-align:center;margin:25px auto}
-@media(max-width:700px){.letter-mode main{padding:0 12px}.birthday-letter{padding:100px 25px 60px;min-height:750px}.letter-copy{font-size:24px;line-height:1.65}.letter-controls .secondary{font-size:12px;padding:10px 14px}}
+@media(max-width:700px){.letter-mode main{padding:0 12px}.birthday-letter{padding:100px 25px 60px;min-height:750px}.letter-copy{font-size:20px;line-height:1.7}.letter-controls .secondary{font-size:12px;padding:10px 14px}}

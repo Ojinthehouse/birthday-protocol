@@ -64,7 +64,7 @@ function choice(eyebrow,title,description,yes,no,next,soft){scene.innerHTML=`<di
 // Advance on the actual end of each supplied clip, with a fallback for unavailable media.
 function playPullVideo(src,label,onFinish,{fakeout=false}={}){
  const token=epoch;
- scene.innerHTML=`<div class="cinema footage"><video playsinline preload="auto" aria-label="${esc(label)}"></video><p class="pull-loading" role="status">Preparing your pull…</p><button class="secondary" id="skip">Skip animation ↗</button></div>`;
+ scene.innerHTML=`<div class="cinema footage"><video playsinline preload="auto" aria-label="${esc(label)}"></video><p class="pull-loading" role="status">${stage===13?'Opening your letter…':'Preparing your pull…'}</p><button class="secondary" id="skip">Skip animation ↗</button></div>`;
  const video=scene.querySelector('video'),box=scene.querySelector('.cinema');
  let finished=false,watchdog,interrupted=false;
  const finish=()=>{if(finished||epoch!==token)return;finished=true;clearTimeout(watchdog);timers.delete(watchdog);video.pause();onFinish();};
