@@ -34,3 +34,5 @@ Lingyang portrait: https://gachatracker.app/games/wuwa/characters/lingyang/ (gam
 
 S1 animated artwork: https://tenor.com/en-IN/view/phrolova-wuthering-waves-drive-driving-cry-gif-11760760868172603458
 S2 animated artwork: https://tenor.com/en-IN/view/nono-phrolova-phrolova-nono-gif-11222211335723166748
+
+Final ending: collection -> new envelope -> one-shot letter animation -> handwritten birthday letter, revealed word by word. Show full letter skips typing; restart cancels pending words. Animation source: https://tenor.com/en-IN/view/wizarding-world-harry-potter-fantastic-beasts-hogwarts-legacy-letter-gif-27657027

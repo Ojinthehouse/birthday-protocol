@@ -142,3 +142,16 @@
 @media(prefers-reduced-motion:reduce){.storm-sheet{opacity:1;transform:translate(-50%,-50%) rotate(var(--turn));will-change:auto}.artist-overflow.is-blowing .storm-sheet{opacity:0}}
 /* Keep the case name inside its portrait caption at all widths. */
 .evidence-caption strong{font-size:clamp(24px,3.4vw,42px);overflow-wrap:anywhere}
+
+/* Final envelope and handwritten birthday letter. */
+.letter-mode .backdrop{background:radial-gradient(ellipse at top,#43342166,#070d0be8),url('./assets/manor.webp') center/cover}
+.envelope-scene{padding:25px 0}.envelope-scene .lead{margin:15px auto 25px}
+.envelope-button{display:block;margin:25px auto;background:transparent;border:0;padding:10px;animation:envelope-wiggle 2.4s ease-in-out infinite}
+.envelope-button img{display:block;width:min(300px,70vw);height:auto;filter:drop-shadow(0 15px 25px #0008)}
+@keyframes envelope-wiggle{0%,55%,100%{transform:rotate(0)}60%,80%{transform:rotate(-6deg)}70%,90%{transform:rotate(6deg)}}
+.letter-controls{display:flex;justify-content:flex-end;margin-bottom:16px}
+.birthday-letter{max-width:870px;margin:auto;padding:clamp(110px,14vw,150px) clamp(25px,7vw,85px) 90px;background:#d6b087 url('./assets/final-letter.png') center/100% 100% no-repeat;color:#38251c;box-shadow:0 25px 70px #0007;min-height:950px}
+.birthday-letter .letter-title{font:42px/1.4 'IDV Handwriting',Georgia,serif;letter-spacing:0;margin-bottom:25px}
+.letter-copy{white-space:pre-wrap;overflow-wrap:break-word;font:clamp(24px,2.5vw,30px)/1.65 'IDV Handwriting',Georgia,serif}
+.letter-end{text-align:center;font-size:38px;margin-top:35px}.letter-status{text-align:center;margin:25px auto}
+@media(max-width:700px){.letter-mode main{padding:0 12px}.birthday-letter{padding:100px 25px 60px;min-height:750px}.letter-copy{font-size:24px;line-height:1.65}.letter-controls .secondary{font-size:12px;padding:10px 14px}}

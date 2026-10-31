@@ -1,7 +1,7 @@
 'use strict';
 const C = window.BIRTHDAY_CONFIG;
 const scene = document.querySelector('#scene');
-const chapters = ['IDENTIFICATION','ACCOUNT INVESTIGATION','TALENT ANALYSIS','TRUST CHECK','PRANK REVEAL','SIDE QUEST','CHECKING IN','BIRTHDAY WISHES','YOUR GIFT','CONVENE','REWARDS','TO BE CONTINUED'];
+const chapters = ['IDENTIFICATION','ACCOUNT INVESTIGATION','TALENT ANALYSIS','TRUST CHECK','PRANK REVEAL','SIDE QUEST','CHECKING IN','BIRTHDAY WISHES','YOUR GIFT','CONVENE','REWARDS','YOUR COLLECTION','NEW ENVELOPE','OPENING YOUR LETTER','HAPPY BIRTHDAY, YUKI'];
 let transitionOverlay=null, artistOverlay=null;
 let stage=0, attempts=0, rewardIndex=0, sound=false, audioContext, epoch=0, audio;
 const timers = new Set();
@@ -27,6 +27,9 @@ if(stage===8){scene.innerHTML=`<div class="panel banner"><div>${intro('Birthday-
 if(stage===9)cinematic();
 if(stage===10)showReward(rewardIndex);
 if(stage===11)results();
+if(stage===12)envelope();
+if(stage===13)playPullVideo('./assets/letter-opening.mp4','Your birthday letter opening',()=>go(14));
+if(stage===14)finalLetter();
 }
 function investigationTransition(){
  if(transitionOverlay)return;
@@ -46,7 +49,7 @@ function investigationTransition(){
  video.play().catch(()=>finish());later(finish,15000);
 }
 function decorateArchive(){
- document.body.classList.toggle('idv-mode',stage<=7);document.body.classList.toggle('birthday-page',stage===7);
+ document.body.classList.toggle('letter-mode',stage>=12);document.body.classList.toggle('idv-mode',stage<=7);document.body.classList.toggle('birthday-page',stage===7);
  scene.classList.remove('shake');
  if(stage<1||stage>6)return;
  const variants=['','hunter','survivor','survivor-switch','hunter-switch','survivor','survivor-switch'];
@@ -110,7 +113,7 @@ function revealReward(index){
  go(10);
 }
 function showReward(index,fromCollection=false){const r=C.rewards[index];scene.innerHTML=`<div class="reward ${r.rarity===5?'five-star-reward':''}"><div class="reward-art">${r.image?`<img src="${esc(r.image)}" alt="${esc(r.title)}">`:`<span aria-hidden="true">${r.icon}</span>`}</div><div><p class="eyebrow">${fromCollection?'YOUR COLLECTION':index>=10?'SURPRISE · BONUS REVEAL':`REVEAL ${String(index+1).padStart(2,'0')} / 10`} · ${esc(r.subtitle)}</p><div class="stars" aria-label="${r.rarity} stars">${'✦'.repeat(r.rarity)}</div><h2>${esc(r.title)}</h2><p class="lead">${esc(r.description)}</p>${button(fromCollection?'Back to results ↗':index===C.rewards.length-1?'View all rewards ↗':index===9?'Wait, one more thing… ↗':'Next reveal ↗')}</div></div>`;document.querySelector('#next').onclick=()=>{if(fromCollection||index===C.rewards.length-1)go(11);else{revealReward(index+1);}};if(r.title==='The Artist')artistBurst();}
-function results(){scene.innerHTML=`${intro('Convene complete','Ten pulls. One extra surprise.','A very suspicious amount of birthday luck. Tap a reward to look again.')}<div class="results">${C.rewards.map((r,i)=>`<button class="result-card ${r.rarity===5?'gold-card':''}" data-reward="${i}" aria-label="View ${esc(r.title)}">${r.image?`<img src="${esc(r.image)}" alt="">`:`<span>${r.icon}</span>`}<strong>${esc(r.title)}</strong><small>${'✦'.repeat(r.rarity)}</small></button>`).join('')}</div><div class="panel"><p class="eyebrow">CHAPTER COMPLETE</p><h3>Your story doesn’t end here.</h3><p class="tiny">More birthday mischief is on its way. This is where the next chapter will begin.</p>${button('Replay the ten-pull ↺','replay','secondary')}</div>`;document.querySelectorAll('[data-reward]').forEach(b=>b.onclick=()=>{showReward(Number(b.dataset.reward),true);scene.querySelector('h2').focus?.();});document.querySelector('#replay').onclick=()=>go(8);}
+function results(){scene.innerHTML=`${intro('Convene complete','Ten pulls. One extra surprise.','A very suspicious amount of birthday luck. Tap a reward to look again.')}<div class="results">${C.rewards.map((r,i)=>`<button class="result-card ${r.rarity===5?'gold-card':''}" data-reward="${i}" aria-label="View ${esc(r.title)}">${r.image?`<img src="${esc(r.image)}" alt="">`:`<span>${r.icon}</span>`}<strong>${esc(r.title)}</strong><small>${'✦'.repeat(r.rarity)}</small></button>`).join('')}</div><div class="panel"><p class="eyebrow">ONE LAST THING</p><h3>There’s a letter for you.</h3><p class="tiny">A final message, just for Yuki.</p>${button('Read your final message ↗','final-message')} ${button('Replay the ten-pull ↺','replay','secondary')}</div>`;document.querySelectorAll('[data-reward]').forEach(b=>b.onclick=()=>{showReward(Number(b.dataset.reward),true);scene.querySelector('h2').focus?.();});document.querySelector('#replay').onclick=()=>go(8);document.querySelector('#final-message').onclick=()=>go(12);}
 
 function clearArtistOverlay(){
  if(!artistOverlay)return;
@@ -138,6 +141,23 @@ function artistBurst(){
  blow.onclick=finish;skip.onclick=finish;
  overlay.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();finish();}if(e.key==='Tab'&&!prompt.hidden){e.preventDefault();(document.activeElement===blow?skip:blow).focus();}});
  later(()=>{if(epoch!==originEpoch||leaving)return;prompt.hidden=false;blow.focus();},reduced?0:artworks.length*145+900);
+}
+
+
+function envelope(){
+ scene.innerHTML=`<div class="envelope-scene center"><p class="eyebrow">A FINAL MESSAGE</p><h2>You have a new envelope.</h2><button class="envelope-button" id="open-letter" aria-label="Open your birthday envelope"><img src="./assets/new-envelope.png" alt="Sealed birthday envelope"></button><p class="lead">One last thing, just for you.</p>${button('Open your letter ↗')}</div>`;
+ document.querySelector('#open-letter').onclick=()=>go(13);nextTo(13);
+}
+function finalLetter(){
+ const token=epoch;
+ const full=C.finalMessage;
+ scene.innerHTML=`<div class="letter-controls">${button('Show full letter','show-letter','secondary')}</div><article class="birthday-letter" aria-label="A birthday letter for Yuki"><h2 class="letter-title">For Yuki,</h2><div class="letter-copy" aria-live="off"></div><p class="letter-end" hidden>♡</p></article><p class="tiny letter-status" role="status">Your letter is being written…</p>`;
+ const copy=scene.querySelector('.letter-copy'),end=scene.querySelector('.letter-end'),status=scene.querySelector('.letter-status'),show=scene.querySelector('#show-letter');
+ const pieces=full.match(/\S+\s*/g)||[];let i=0,complete=false;
+ const finish=()=>{if(complete||epoch!==token)return;complete=true;copy.textContent=full;end.hidden=false;show.hidden=true;status.textContent='Happy birthday, Yuki. ♡';};
+ show.onclick=finish;
+ const write=()=>{if(complete||epoch!==token)return;if(i>=pieces.length){finish();return;}copy.append(document.createTextNode(pieces[i++]));later(write,140);};
+ if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)finish();else later(write,650);
 }
 
 document.querySelector('#sound').onclick=()=>{sound=!sound;document.querySelector('#sound').textContent=sound?'Sound on':'Sound off';document.querySelector('#sound').setAttribute('aria-label',sound?'Disable sound':'Enable sound');scene.querySelectorAll('video').forEach(v=>v.muted=!sound);if(sound)tone(660);};document.querySelector('#restart').onclick=()=>{attempts=0;rewardIndex=0;go(0);};go(0);
